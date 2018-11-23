@@ -1,4 +1,5 @@
-# jenkins-tutorial
-How to setup Jenkins for mobile app continuous integration
+# Jenkins Tutorial
 
-[iOS](ios.md)
+How to setup Jenkins for mobile app continuous integration.
+
+[iOS guide](ios.md)

@@ -2,16 +2,17 @@
 
 Here at Ebates for iOS continuous integration and deployment, we are using Jenkins which has been working quite well! In this guide, we will be going over the following:
 
-1. Setting up GitHub and Jenkins webhooks
-2. Creating new items(formerly known as jobs) on Jenkins
-3. Creating declarative pipeline script, a.k.a Jenkinsfile
+1. Setting up GitHub for webhooks
+2. Setting up Jenkins for webhooks
+3. Creating new items(formerly known as jobs) on Jenkins
+4. Creating declarative pipeline script, a.k.a Jenkinsfile
 
 ### Environment
 
 - Jenkins 2.89.3
 - Xcode 10.0
 
-### 1. Setting up GitHub for Jenkins webhooks
+### 1. Setting up GitHub for webhooks
 
 Your Jenkins server and GitHub will need to be able to communicate to each other in order for a pull request to trigger a build. To do that, let's go to GitHub first to set that up.
 
@@ -24,6 +25,8 @@ Your Jenkins server and GitHub will need to be able to communicate to each other
 
 5. Add your Jenkins server address with `github-webhook` path. e.g. `http://example.com/github-webhook`
 6. Choose `Let me select individual events.` and check `Pushes` and `Pull requests`
+
+### 2. Setting up Jenkins for webhooks
 
 Now let's configure Jenkins' webhook.
 
@@ -38,7 +41,7 @@ Now let's configure Jenkins' webhook.
 
 More info on webhook: https://support.cloudbees.com/hc/en-us/articles/224543927-GitHub-webhook-configuration
 
-### 2. Creating new Item on Jenkins
+### 3. Creating new Item on Jenkins
 
 1. Go to your Jenkins server and click on `New Item`
 2. Give it a name and choose `Multibranch Pipeline`
@@ -46,22 +49,24 @@ More info on webhook: https://support.cloudbees.com/hc/en-us/articles/224543927-
 4. In `Behaviors` section, delete everything else and only have `Discover pull requests from origin`. This section can be customized to your needs
 5. In `Build Configuration` section by default, the pipeline script name is specified as `Jenkinsfile`
 6. Use this sample script for the `Jenkinsfile`
+
 ```groovy
 pipeline {
     agent any
-      stages {
-          stage('Setup') {
-              steps {
+    stages {
+        stage('Setup') {
+            steps {
                 echo "Hello world!👋"
-              }
-          }
-      }
+            }
+        }
+    }
 }
 ```
+
 7. Create a new pull request with this script and your Jenkins machine should detect it and start running the script
 
 
-### 3. Creating declarative pipeline script: The Jenkinsfile
+### 4. Creating declarative pipeline script: The Jenkinsfile
 
 Pipeline scripts are responsible for defining what your Jenkins item will do for each build. For this guide, we will:
 
